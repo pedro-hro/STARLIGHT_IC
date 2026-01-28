@@ -14,13 +14,16 @@ Dados/
 
 BasesDir/
 Runs_WAGGS/NGC0104/BasesDir
+Runs_WAGGS/Scripts/Learning/
 *.gm
 
 Base.*
 
 *.out
-*.log
+*.in
+*.config
 *.flux
 
 *.pdf
 *.png
+*.jpg
