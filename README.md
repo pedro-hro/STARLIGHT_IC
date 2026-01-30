@@ -38,12 +38,14 @@ Espectros integrados do *WiFeS Atlas of Galactic Globular Clusters* (WAGGS DR1).
 
 ## 📊 Resultados Preliminares
 
-| Parâmetro | Valor Obtido 
-| :--- | :--- |
-| **Idade (Luz)** | ~4.9 Gyr | 
-| **Idade (Massa)** | ~8.4 Gyr | 
-| **Metalicidade** | $Z \approx 0.019$  
-| **Extinção($A_V$)** | ~0.0 mag 
+| Parâmetro | Valor Obtido      
+| :--- |:------------------|
+| **Idade (Luz)** | ~11.5 Gyr         | 
+| **Idade (Massa)** | ~12.1 Gyr         | 
+| **Metalicidade** | $Z \approx 0.005$ 
+| **Extinção($A_V$)** | ~0.14 mag          
+
+![NGC0104_fit.png](Runs_WAGGS/NGC0104/NGC0104_fit.png)
 
 ---
 
@@ -55,7 +57,7 @@ Espectros integrados do *WiFeS Atlas of Galactic Globular Clusters* (WAGGS DR1).
 
 ### 2. Configurando o STARLIGHT
 1.  Baixe o **STARLIGHT v04** no [site oficial](http://www.starlight.ufsc.br).
-2. Baixe os dados **WAGGS** do [repositório oficial](https://researchdata.edu.au/wiggs-wifes-atlas-galactic-globular-clusters/165145).
+2. Baixe os dados **WAGGS** do [repositório oficial](https://docs.datacentral.org.au/waggs/#dr1).
 3.  Coloque o executável na pasta `STARLIGHT/Runs_WAGGS/NGC0104/` (ou aponte o caminho no *grid*).
 4.  Certifique-se de ter a pasta `BasesDir/` contendo os arquivos da base.
 

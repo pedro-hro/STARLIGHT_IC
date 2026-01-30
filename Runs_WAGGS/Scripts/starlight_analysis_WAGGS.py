@@ -19,6 +19,7 @@ class StarlightOutput:
         this.n0 = None     # Número de pontos usados no ajuste
         this.nl = None     # Número de pontos efetivos
         this.nclip = None  # Número de pontos clipados
+        this.base = None  # Base usada (não implementado)
 
         # Tabela principal/população (começa com "# j x_j[%] Mini_j[%] ...")
         this.population = {
@@ -37,7 +38,10 @@ class StarlightOutput:
             'f_syn': [], # Fluxo Modelo
             'wei': []    # Peso: >0 usado, <=0 mascarado/clipado
         }
-        
+
+        this.min_lambda = None
+        this.max_lambda = None
+
         # Executa a leitura imediata ao instanciar a classe
         this.read_file()
 
@@ -82,6 +86,9 @@ class StarlightOutput:
             elif '[Ntot_cliped & clip_method]' in line:
                 try: this.nclip = int(line.split()[0])
                 except: this.nclip = np.nan
+            elif '[arq_base]' in line:
+                try: this.base = line.split()[0]
+                except: this.base = None
 
             # Identifica o cabeçalho: "# j x_j(%)..."
             if line.startswith('# j') and 'x_j(%)' in line:
@@ -130,6 +137,9 @@ class StarlightOutput:
         for key in this.spectrum:
             this.spectrum[key] = np.array(this.spectrum[key])
 
+        this.min_lambda = np.min(this.spectrum['l_obs']) if len(this.spectrum['l_obs']) > 0 else None
+        this.max_lambda = np.max(this.spectrum['l_obs']) if len(this.spectrum['l_obs']) > 0 else None
+
     def calculate_mean_properties(this):
         """
         Calcula as propriedades médias da população (Idade e Metalicidade).
@@ -165,7 +175,7 @@ class StarlightOutput:
             
             'mean_log_age_mass': mean_log_age_mass,
             'mean_age_mass_gyr': (10**mean_log_age_mass)/1e9,
-            'mean_Z_mass': mean_Z_mass
+            'mean_Z_mass': mean_Z_mass,
         }
 
     def plot_fit(this):
@@ -199,4 +209,5 @@ class StarlightOutput:
         plt.title(title_str)
         plt.legend(frameon=True)
         plt.grid(True, alpha=0.3)
+        plt.savefig(this.filename.replace('.out', '_fit.png'))
         plt.show()
