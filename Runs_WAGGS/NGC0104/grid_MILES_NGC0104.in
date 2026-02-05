@@ -1,16 +1,16 @@
 1 [Number of fits to run]
-BasesDir/
+BasesMiles/
 ./
 ./
 ./
 -71009200 [random seed]
 5300.0 [llow_SN] lower-lambda of S/N window
 5500.0 [lupp_SN] upper-lambda of S/N window
-4170.0 [Olsyn_ini] lower-lambda for fit
-5540.0 [Olsyn_fin] upper-lambda for fit
+3591.0 [Olsyn_ini] lower-lambda for fit
+7359.0 [Olsyn_fin] upper-lambda for fit
 1.0 [Odlsyn] delta-lambda for fit
 1.0 [fscale_chi2] fudge-factor for chi2
 FIT [FIT/FXK] Fit or Fix kinematics
 1 [IsErrSpecAvailable] 1/0 = Yes/No
 1 [IsFlagSpecAvailable] 1/0 = Yes/No
-NGC0104.in   StCv04.C99.config   Base.BC03.S   Mask.Zero.gm   CCM   0.0   150.0   NGC0104.out
+NGC0104.in   StCv04.C99.config   Base.Miles.v2   Mask.Zero.gm   CCM   0.0   150.0   NGC0104_milesTest.out

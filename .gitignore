@@ -13,8 +13,13 @@ Dados/
 *.o
 
 BasesDir/
+BasesMiles/
+outputs/
 Runs_WAGGS/NGC0104/BasesDir
-Runs_WAGGS/Scripts/Learning/
+Runs_WAGGS/NGC0104/BasesMiles
+Scripts/Learning/
+Scripts/join_spec.py
+
 *.gm
 
 Base.*
@@ -27,3 +32,4 @@ Base.*
 *.pdf
 *.txt
 *.jpg
+

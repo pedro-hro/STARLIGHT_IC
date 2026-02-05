@@ -25,8 +25,15 @@ def get_data_from_fits(filepath):
     return lambdas, flux, error
 
 
-def processar_espectros(files_dict, lambda_min=3200, lambda_max=9100, step=1.0, output_name='NGC0104_v2_orig_err.in',
-                        fwhm_target=3.0, err_sistematico=0.05):
+def processar_espectros(
+    files_dict,
+    lambda_min=3200,
+    lambda_max=9100,
+    step=1.0,
+    output_name="NGC0104_v2_orig_err.in",
+    fwhm_target=3.0,
+    err_sistematico=0.05,
+):
     """
     Combina várias bandas num único arquivo de entrada considerando a resolução da base.
 
@@ -46,7 +53,7 @@ def processar_espectros(files_dict, lambda_min=3200, lambda_max=9100, step=1.0, 
 
     sigma_angstroms = fwhm_target / 2.355
 
-    for banda, path in files_dict.items():
+    for band, path in files_dict.items():
         try:
             l_orig, f_orig, e_orig = get_data_from_fits(path)
         except FileNotFoundError:
@@ -55,13 +62,16 @@ def processar_espectros(files_dict, lambda_min=3200, lambda_max=9100, step=1.0, 
 
         # Ajuste de Resolução
         delta_l = np.nanmedian(np.diff(l_orig))
-        if delta_l <= 0 or np.isnan(delta_l): delta_l = 0.4
+        if delta_l <= 0 or np.isnan(delta_l):
+            delta_l = 0.4
 
         sigma_pix = sigma_angstroms / delta_l
 
         if sigma_pix > 0.5:
             f_orig = gaussian_filter1d(f_orig, sigma_pix)
-            e_orig = gaussian_filter1d(e_orig, sigma_pix)  # O erro original também é suavizado
+            e_orig = gaussian_filter1d(
+                e_orig, sigma_pix
+            )  # O erro original também é suavizado
 
         # Interpolação
         interp_flux = interp1d(l_orig, f_orig, bounds_error=False, fill_value=np.nan)
@@ -76,7 +86,7 @@ def processar_espectros(files_dict, lambda_min=3200, lambda_max=9100, step=1.0, 
         mask_overlap = has_new_data & (~is_master_empty)
 
         if np.any(mask_overlap):
-            with np.errstate(divide='ignore', invalid='ignore'):
+            with np.errstate(divide="ignore", invalid="ignore"):
                 ratios = master_flux[mask_overlap] / f_resampled[mask_overlap]
                 ratio = np.nanmedian(ratios)
 
@@ -101,7 +111,12 @@ def processar_espectros(files_dict, lambda_min=3200, lambda_max=9100, step=1.0, 
 
     # Flags
     flag = np.zeros_like(master_flux)
-    bad_pixels = np.isnan(master_flux) | (master_flux <= 0) | np.isnan(master_error) | (master_error <= 0)
+    bad_pixels = (
+        np.isnan(master_flux)
+        | (master_flux <= 0)
+        | np.isnan(master_error)
+        | (master_error <= 0)
+    )
 
     flag[bad_pixels] = 2
     master_flux[bad_pixels] = 0.0
@@ -111,11 +126,13 @@ def processar_espectros(files_dict, lambda_min=3200, lambda_max=9100, step=1.0, 
     # Adiciona erro sistemático
     good_pixels = ~bad_pixels
     master_error[good_pixels] = np.sqrt(
-        master_error[good_pixels] ** 2 + (err_sistematico * master_flux[good_pixels]) ** 2)
+        master_error[good_pixels] ** 2
+        + (err_sistematico * master_flux[good_pixels]) ** 2
+    )
 
     output_data = np.column_stack((master_lambda, master_flux, master_error, flag))
 
-    np.savetxt(output_name, output_data, fmt=['%.1f', '%.16e', '%.16e', '%d'])
+    np.savetxt(output_name, output_data, fmt=["%.1f", "%.16e", "%.16e", "%d"])
     print(f"Arquivo gerado: {output_name}")
 
     return master_lambda, master_flux, master_error
