@@ -12,9 +12,14 @@ Dados/
 *.exe
 *.o
 
-BasesDir/
-BasesMiles/
+BasesDir
+BasesMiles
 outputs/
+grids/
+input*
+old/
+Learning/
+logs/
 Runs_WAGGS/NGC0104/BasesDir
 Runs_WAGGS/NGC0104/BasesMiles
 Scripts/Learning/
@@ -32,4 +37,3 @@ Base.*
 *.pdf
 *.txt
 *.jpg
-
